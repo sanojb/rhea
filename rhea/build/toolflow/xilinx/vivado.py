@@ -217,5 +217,5 @@ class Vivado(ToolFlow):
         return self.logfn
 
     def get_utilization(self):
-        info = "NotImplemented"
+        info = "Getting the utilization is not yet implemented!"
         return info
