@@ -5,10 +5,8 @@
 # https://github.com/RedPitaya/RedPitaya/blob/master/fpga/sdc/red_pitaya.xdc
 ##
 
-
 from rhea.build import FPGA
 from rhea.build.toolflow import Vivado
-
 
 class RedPitaya(FPGA):
     vendor = 'xilinx'
@@ -88,9 +86,6 @@ class RedPitaya(FPGA):
 		## LED
 		'led': dict(pins=('F16', 'F17', 'G15', 'H15', 'K14', 'G14', 'J15', 'J14'),
                     iostandard='LVCMOS33', slew='SLOW', drive='4'),
-					
-					
-		
     }
 
     def get_flow(self, top=None):
