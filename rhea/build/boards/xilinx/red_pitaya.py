@@ -32,9 +32,9 @@ class RedPitaya(FPGA):
 		### ADC
 		# ADC data
         'adc_dat_i_[1]': dict(pins=('Y17', 'W16', 'Y16', 'W15', 'W14', 'Y14', 'W13', 'V12', 'V13', 'T14', 'T15', 'V15', 'T16', 'V16'),
-                    iostandard='LVCMOS18', iob=True),
+                    iostandard='LVCMOS18', iob='TRUE'),
 		'adc_dat_i_[2]': dict(pins=('R18', 'P16', 'P18', 'N17', 'R19', 'T20', 'T19', 'U20', 'V20', 'W20', 'W19', 'Y19', 'W18', 'Y18'),
-                    iostandard='LVCMOS18', iob=True),
+                    iostandard='LVCMOS18', iob='TRUE'),
 					
 		# ADC clock
 		'adc_clk_i': dict(pins=('U18', 'U19'),						# Input
@@ -61,7 +61,7 @@ class RedPitaya(FPGA):
 					
 		### PWM DAC
 		'dac_pwm_o': dict(pins=('T10', 'T11', 'P15', 'U13'),
-                    iostandard='LVCMOS18', slew='FAST', drive='12', iob=True),
+                    iostandard='LVCMOS18', slew='FAST', drive='12', iob='TRUE'),
 					
 		### XADC (AD8, AD0, AD1, AD9, V_0)
 		'vinp_i': dict(pins=('B19', 'C20', 'E17', 'E18', 'K9'),

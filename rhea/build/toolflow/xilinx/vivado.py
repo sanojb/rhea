@@ -69,10 +69,54 @@ class Vivado(ToolFlow):
                     ustr += ["set_property PACKAGE_PIN {} [get_ports {}]".format(
                         str(pn), pm)]
                         
-                    # additional pin constraints
+                    # Additional pin constraints
+					# Refer to page 136 for I/O constraints
+					# https://www.xilinx.com/support/documentation/sw_manuals/xilinx2016_2/ug903-vivado-using-constraints.pdf
                     for kp, vp in port.pattr.items():
-                        if kp == 'iostandard':
+                        # Sets the output buffer drive strength (in mA), available with certain I/O standards only.
+                        if kp == 'drive':
+                            ustr += ["set_property DRIVE {} [get_ports {}]".format(
+                                str(vp), pm)]
+                        # Sets an I/O Standard
+                        elif kp == 'iostandard':
                             ustr += ["set_property IOSTANDARD {} [get_ports {}]".format(
+                                str(vp), pm)]
+						# Sets the slew rate (the rate of transition) behavior of a device output.
+                        elif kp == 'slew':
+                            ustr += ["set_property SLEW {} [get_ports {}]".format(
+                                str(vp), pm)]
+						# Sets the configuration of the input termination resistance for an input port
+                        elif kp == 'in_term':
+                            ustr += ["set_property IN_TERM {} [get_ports {}]".format(
+                                str(vp), pm)]
+						# Turns on or off the 100 ohm differential termination for primitives such as IBUFDS_DIFF_OUT.
+                        elif kp == 'diff_term':
+                            ustr += ["set_property DIFF_TERM {} [get_ports {}]".format(
+                                str(vp), pm)]
+						# Applies a weak driver on an tri-stateable output or bidirectional port to preserve its value when not being driven.
+                        elif kp == 'keeper':
+                            ustr += ["set_property KEEPER {} [get_ports {}]".format(
+                                str(vp), pm)]
+						# Applies a weak logic low or high level on a tri-stateable output or bidirectional port to prevent it from floating.
+                        elif kp == 'pulltype':
+                            ustr += ["set_property PULLTYPE {} [get_ports {}]".format(
+                                str(vp), pm)]
+						# Defines a set of master and slave banks. The DCI reference voltage is chained from the master bank to the slaves.
+						# DCI_CASACDE is set on IOBANK objects.
+                        elif kp == 'dci_cascade':
+                            ustr += ["set_property DCI_CASACDE {} [get_ports {}]".format(
+                                str(vp), pm)]
+						# Frees the Vref pins of an I/O Bank and uses an internally generated Vref instead. INTERNAL_VREF is set on IOBANK objects
+                        elif kp == 'internal_vref':
+                            ustr += ["set_property INTERNAL_VREF {} [get_ports {}]".format(
+                                str(vp), pm)]
+						# Groups a set of IDELAY and IODELAY IDELAYCTRL to enable automatic replication and placement of IDELAYCTRL in a design.
+                        elif kp == 'iodelay_group':
+                            ustr += ["set_property IODELAY_GROUP {} [get_ports {}]".format(
+                                str(vp), pm)]
+						# Tells the placer to try to place FFs in I/O Logic instead of the fabric slice.
+                        elif kp == 'iob':
+                            ustr += ["set_property IOB {} [get_ports {}]".format(
                                 str(vp), pm)]
                         else:
                             raise NotImplementedError("additional constraints not supported yet")
