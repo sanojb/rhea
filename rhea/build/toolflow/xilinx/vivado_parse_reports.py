@@ -24,9 +24,14 @@ def get_utilization(fn=None):
         +------+-------+------+
     """
     
-    log = open(fn, 'r')
     info = {}
     info['syn'] = {}
+    
+    try:
+        log = open(fn, 'r')
+    except FileNotFoundError:
+        info = 'Could not find the logfile. Something must have gone wrong in the build process'
+        return info
     
     found_start = False
     plus_count = 0
