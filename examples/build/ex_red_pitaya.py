@@ -10,7 +10,7 @@ def run_red_pitaya():
     # get a board to implement the design on
     brd = get_board('red_pitaya')
     flow = build.flow.Vivado(brd=brd, top=blinky)
-    flow.run()
+    flow.run(generate_binary=True)
     info = flow.get_utilization()
     pprint(info)
     

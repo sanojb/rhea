@@ -191,7 +191,7 @@ class Vivado(ToolFlow):
         # >> program_hw_devices [lindex [get_hw_devices] 1]
         # >> refresh_hw_device [lindex [get_hw_devices] 1]
 
-    def run(self, use='verilog', name=None):
+    def run(self, use='verilog', name=None, generate_binary=False):
         """ Execute the toolflow """
         self.pathexist(self.path)
         cfiles = convert(self.brd, name=self.name,
@@ -204,6 +204,8 @@ class Vivado(ToolFlow):
             binary_name += '.bat'
 
         cmd = [binary_name, '-mode', 'batch', '-source', tcl_name]
+        if generate_binary:
+            cmd.append(['-g', 'Binary:Yes'])
         self.logfn = self._execute_flow(cmd, "build_vivado.log")
 
         # @todo: refactor into a cleanup function
