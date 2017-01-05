@@ -127,7 +127,7 @@ class Vivado(ToolFlow):
             for line in ustr:                
                 fid.write(line + '\n')
 
-    def create_flow_script(self):
+    def create_flow_script(self, generate_binary):
 
         fn = os.path.join(self.path, self.name+'.tcl')
 
@@ -169,8 +169,12 @@ class Vivado(ToolFlow):
         tcl += ["route_design"]
         tcl += ["report_timing_summary -file \"{}\"".format(
             self.escape_path(os.path.join(self.path, self.name+'_timing.rpt')))]
-        tcl += ["write_bitstream -force \"{}\"".format(
-            self.escape_path(os.path.join(self.path, self.name+'.bit')))]
+        if generate_binary:
+	    tcl += ["write_bitstream -force -bin_file \"{}\"".format(
+                self.escape_path(os.path.join(self.path, self.name+'.bit')))]
+        else:
+            tcl += ["write_bitstream -force \"{}\"".format(
+                self.escape_path(os.path.join(self.path, self.name+'.bit')))]
 
         tcl += ["quit"]
 
@@ -198,14 +202,12 @@ class Vivado(ToolFlow):
                          use=use, path=self.path)
         self.add_files(cfiles)
         self.create_constraints()
-        tcl_name = self.create_flow_script()
+        tcl_name = self.create_flow_script(generate_binary)
         binary_name = 'vivado'
         if platform.system() == 'Windows':
             binary_name += '.bat'
 
         cmd = [binary_name, '-mode', 'batch', '-source', tcl_name]
-        if generate_binary:
-            cmd.append(['-g', 'Binary:Yes'])
         self.logfn = self._execute_flow(cmd, "build_vivado.log")
 
         # @todo: refactor into a cleanup function
