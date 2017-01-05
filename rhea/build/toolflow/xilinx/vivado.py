@@ -15,6 +15,7 @@ from time import gmtime, strftime
 from rhea.system import Clock
 from ..toolflow import ToolFlow
 from ..convert import convert
+from .ise_parse_reports import get_utilization
 
 
 class Vivado(ToolFlow):
@@ -217,5 +218,5 @@ class Vivado(ToolFlow):
         return self.logfn
 
     def get_utilization(self):
-        info = "Getting the utilization is not yet implemented!"
+        info = get_utilization(self.logfn)
         return info
