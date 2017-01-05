@@ -127,9 +127,6 @@ class Vivado(ToolFlow):
             for line in ustr:                
                 fid.write(line + '\n')
 
-
-
-
     def create_flow_script(self):
 
         fn = os.path.join(self.path, self.name+'.tcl')
