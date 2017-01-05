@@ -15,7 +15,7 @@ from time import gmtime, strftime
 from rhea.system import Clock
 from ..toolflow import ToolFlow
 from ..convert import convert
-from .ise_parse_reports import get_utilization
+from .vivado_parse_reports import get_utilization
 
 
 class Vivado(ToolFlow):
